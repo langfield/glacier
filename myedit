@@ -31,7 +31,7 @@ read -t 60 -p "Are you sure you still want to edit $target (y/N)? " YN
 [[ "${YN,,}" =~ ^(y|yes)$ ]] || exit 1
 
 umask 0022
-tmpf=$(mktemp -d "/tmp/${progName}_XXXXXXXXXX")
+tmpf=$(mktemp "/tmp/${progName}_XXXXXXXXXX")
 cp -f "$target" "$tmpf"
 
 # Revert to the original user account to edit the temporary file
