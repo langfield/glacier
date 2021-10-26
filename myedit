@@ -2,7 +2,7 @@
 #
 # THIS SCRIPT RUNS AS ROOT
 #
-# %myeditors ALL=(ALL) NOPASSWD: /usr/local/bin/myedit
+# %glacier ALL=(ALL) NOPASSWD: /usr/local/bin/myedit
 ########################################################################
 
 # User configurable values
