@@ -1,0 +1,48 @@
+#!/bin/bash
+#
+# THIS SCRIPT RUNS AS ROOT
+#
+# %myeditors ALL=(ALL) NOPASSWD: /usr/local/bin/myedit
+########################################################################
+
+# User configurable values
+target='/usr/local/etc/specialfile'    # The file to be edited
+delay=600                              # Delay in seconds
+
+########################################################################
+# Here we go
+#
+# This variable qxpansion qets the basename of the path to this file
+progName="${0##*/}"
+
+# Reset PATH to known quantity
+export PATH=/usr/local/bin:/bin:/usr/bin
+
+# Force the script to run with sudo
+[[ $(id -u) != 0 ]] && exec sudo "$0" "$@"
+
+printf 'Waiting %d seconds...' $delay
+sleep $delay && echo
+
+read -t 60 -p "Are you sure you still want to edit $target (y/N)? " YN
+[[ "${YN,,}" =~ ^(y|yes)$ ]] || exit 1
+
+umask 0022
+tmpf=$(mktemp -d "/tmp/${progName}_XXXXXXXXXX")
+cp -f "$target" "$tmpf"
+
+# Revert to the original user account to edit the temporary file
+chown "$SUDO_USER" "$tmpf"
+sudo -u "$SUDO_USER" "${EDITOR:-vi}" "$tmpf"
+
+# Apply changes
+if [[ -f "$tmpf" ]] && ! cmp -s "$target" "$tmpf"
+then
+    echo 'Applying changes'
+    cp -pf "$target" "$target.old"
+    cp -f "$tmpf" "$target"
+fi
+
+# All done
+rm -f "$tmpf"
+exit 0
