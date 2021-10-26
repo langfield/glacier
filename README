@@ -9,3 +9,5 @@ Consider a script /usr/local/bin/myedit. Add the user into the group myeditors, 
 %myeditors ALL=(ALL) NOPASSWD: /usr/local/bin/myedit
 
 Now create the script /usr/local/bin/myedit, remembering to make it executable (chmod a+x /usr/local/bin/myedit).
+
+sudo systemctl restart NetworkManager

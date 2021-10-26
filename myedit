@@ -8,7 +8,7 @@
 # User configurable values
 
 # The file to be edited
-target='/etc/dnsmasq.conf'
+target='/etc/hosts'
 # Delay in seconds
 delay=5
 
