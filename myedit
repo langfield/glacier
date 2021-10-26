@@ -6,8 +6,11 @@
 ########################################################################
 
 # User configurable values
-target='/usr/local/etc/specialfile'    # The file to be edited
-delay=600                              # Delay in seconds
+
+# The file to be edited
+target='specialfile'
+# Delay in seconds
+delay=5
 
 ########################################################################
 # Here we go

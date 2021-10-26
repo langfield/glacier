@@ -1,3 +1,9 @@
 +-------+
 |glacier|
 +-------+
+
+Consider a script /usr/local/bin/myedit. Add the user into the group myeditors, or if it really will ever only be a single user, change the %myeditors value to the username. Using visudo add this line to the sudoers file
+
+%myeditors ALL=(ALL) NOPASSWD: /usr/local/bin/myedit
+
+Now create the script /usr/local/bin/myedit, remembering to make it executable (chmod a+x /usr/local/bin/myedit).
