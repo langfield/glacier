@@ -35,10 +35,12 @@ cp -f "$target" "$tmpf"
 chown "$SUDO_USER" "$tmpf"
 sudo -u "$SUDO_USER" "${EDITOR:-vi}" "$tmpf"
 
-# Apply changes
+# If the copy of the file we edited ($tmpf) exists and we made nontrivial changes, apply them
 if [[ -f "$tmpf" ]] && ! cmp -s "$target" "$tmpf"
 then
     echo 'Applying changes'
+
+    # Backup the target and then replace it with our edited version
     cp -pf "$target" "$target.old"
     cp -f "$tmpf" "$target"
 fi
