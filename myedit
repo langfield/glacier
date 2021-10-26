@@ -24,8 +24,14 @@ export PATH=/usr/local/bin:/bin:/usr/bin
 # Force the script to run with sudo
 [[ $(id -u) != 0 ]] && exec sudo "$0" "$@"
 
-printf 'Waiting %d seconds...' $delay
-sleep $delay && echo
+# Sleep while printing time remaining
+echo "Delay: $delay"
+for i in $(seq 1 $delay);
+do
+    printf 'Waiting %d seconds...\r' $(($delay - $i))
+    sleep 1
+done
+printf '\n'
 
 read -t 60 -p "Are you sure you still want to edit $target (y/N)? " YN
 [[ "${YN,,}" =~ ^(y|yes)$ ]] || exit 1
