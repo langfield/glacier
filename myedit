@@ -24,6 +24,21 @@ export PATH=/usr/local/bin:/bin:/usr/bin
 # Force the script to run with sudo
 [[ $(id -u) != 0 ]] && exec sudo "$0" "$@"
 
+umask 0022
+tmpf=$(mktemp "/tmp/${progName}_XXXXXXXXXX")
+cp -f "$target" "$tmpf"
+
+# Revert to the original user account to edit the temporary file
+chown "$SUDO_USER" "$tmpf"
+sudo -u "$SUDO_USER" "${EDITOR:-vi}" "$tmpf"
+printf '############################### OLD VERS: ``%s`` ###############################\n' $target
+cat $target
+printf '############################### NEW VERS: ``%s`` ###############################\n' $target
+cat $tmpf
+printf '############################### EDITS TO: ``%s`` ###############################\n' $target
+diff $target $tmpf
+printf '############################### --------: ``%s`` ###############################\n' $target
+
 # Sleep while printing time remaining
 echo "Delay: $delay"
 for i in $(seq 1 $delay);
@@ -33,16 +48,8 @@ do
 done
 printf '\n'
 
-read -t 60 -p "Are you sure you still want to edit $target (y/N)? " YN
+read -t 60 -p "Are you sure you still want to edit \'$target\' (y/N)? " YN
 [[ "${YN,,}" =~ ^(y|yes)$ ]] || exit 1
-
-umask 0022
-tmpf=$(mktemp "/tmp/${progName}_XXXXXXXXXX")
-cp -f "$target" "$tmpf"
-
-# Revert to the original user account to edit the temporary file
-chown "$SUDO_USER" "$tmpf"
-sudo -u "$SUDO_USER" "${EDITOR:-vi}" "$tmpf"
 
 # If the copy of the file we edited ($tmpf) exists and we made nontrivial changes, apply them
 if [[ -f "$tmpf" ]] && ! cmp -s "$target" "$tmpf"
