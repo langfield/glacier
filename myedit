@@ -8,7 +8,7 @@
 # User configurable values
 
 # The file to be edited
-target='specialfile'
+target='/etc/dnsmasq.conf'
 # Delay in seconds
 delay=5
 
@@ -31,13 +31,13 @@ cp -f "$target" "$tmpf"
 # Revert to the original user account to edit the temporary file
 chown "$SUDO_USER" "$tmpf"
 sudo -u "$SUDO_USER" "${EDITOR:-vi}" "$tmpf"
-printf '############################### OLD VERS: ``%s`` ###############################\n' $target
+printf "############################### OLD VERS: '%s' ###############################\n\n" $target
 cat $target
-printf '############################### NEW VERS: ``%s`` ###############################\n' $target
+printf "\n############################### NEW VERS: '%s' ###############################\n\n" $target
 cat $tmpf
-printf '############################### EDITS TO: ``%s`` ###############################\n' $target
-diff $target $tmpf
-printf '############################### --------: ``%s`` ###############################\n' $target
+printf "\n############################### EDITS TO: '%s' ###############################\n\n" $target
+diff --new-file $target $tmpf
+printf "\n############################### --------: '%s' ###############################\n\n" $target
 
 # Sleep while printing time remaining
 echo "Delay: $delay"
@@ -48,7 +48,7 @@ do
 done
 printf '\n'
 
-read -t 60 -p "Are you sure you still want to edit \'$target\' (y/N)? " YN
+read -t 60 -p "Are you sure you still want to edit '$target' (y/N)? " YN
 [[ "${YN,,}" =~ ^(y|yes)$ ]] || exit 1
 
 # If the copy of the file we edited ($tmpf) exists and we made nontrivial changes, apply them
@@ -57,10 +57,12 @@ then
     echo 'Applying changes'
 
     # Backup the target and then replace it with our edited version
-    cp -pf "$target" "$target.old"
+    [ ! -f "$target" ] && printf "Not making backup. Target '$target' does not exist\n"
+    [ -f "$target" ] && cp -pf "$target" "$target.old"
     cp -f "$tmpf" "$target"
 fi
 
 # All done
+echo 'Done'
 rm -f "$tmpf"
 exit 0

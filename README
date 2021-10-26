@@ -2,6 +2,8 @@
 |glacier|
 +-------+
 
+sudo apt-get install dnsmasq
+
 Consider a script /usr/local/bin/myedit. Add the user into the group myeditors, or if it really will ever only be a single user, change the %myeditors value to the username. Using visudo add this line to the sudoers file
 
 %myeditors ALL=(ALL) NOPASSWD: /usr/local/bin/myedit
