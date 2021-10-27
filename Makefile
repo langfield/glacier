@@ -1,5 +1,5 @@
 default:
 	sudo groupadd -f glacier
-	sudo cp myedit /usr/local/bin/myedit
+	sudo cp glacier /usr/local/bin/glacier
 	sudo usermod -a -G glacier $(USER)
 	sudo cp editors /etc/sudoers.d/glacier

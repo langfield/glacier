@@ -1,1 +1,1 @@
-%glacier ALL=(ALL) NOPASSWD: /usr/local/bin/myedit
+%glacier ALL=(ALL) NOPASSWD: /usr/local/bin/glacier

@@ -2,6 +2,21 @@
 |glacier|
 +-------+
 
+Usage
+-----
+Two use cases:
+1. View root password (maybe just cat to shell output).
+2. Edit a file frozen with glacier (e.g. /etc/hosts).
+
+    glacier -r
+    glacier <filepath> (to edit a frozen file)
+
+Maybe we can't give it ANY path/file. That seems dangerous. We have a list of "valid targets", which is baked into the ``glacier`` executable. If the user tries to call ``glacier <path>`` and gives a path which is not in ``$VALID_TARGETS``, which will be some kind of bash array of strings, then the script will just do nothing.
+
+
+Dev notes
+=========
+
 sudo apt-get install dnsmasq
 
 Consider a script /usr/local/bin/myedit. Add the user into the group myeditors, or if it really will ever only be a single user, change the %myeditors value to the username. Using visudo add this line to the sudoers file
@@ -11,3 +26,58 @@ Consider a script /usr/local/bin/myedit. Add the user into the group myeditors, 
 Now create the script /usr/local/bin/myedit, remembering to make it executable (chmod a+x /usr/local/bin/myedit).
 
 sudo systemctl restart NetworkManager
+
+
+Making sudo ask for the root password
+-------------------------------------
+In /etc/sudoers, add this line:
+
+Defaults rootpw
+
+to turn on the rootpw flag, making sudo ask for the root password.
+
+
+Setting root password
+---------------------
+1. Login as root.
+2. Create a file called ``rootpass``.
+3. Change permissions of the file so the owner (root) has read/write permissions and the group/others have nothing.
+
+	chmod 600 rootpass
+
+4.
+
+
+Argument parsing
+----------------
+a_flag=''
+b_flag=''
+files=''
+verbose='false'
+
+print_usage() {
+  printf "Usage: ..."
+}
+
+while getopts 'abf:v' flag; do
+  case "${flag}" in
+    a) a_flag='true' ;;
+    b) b_flag='true' ;;
+    f) files="${OPTARG}" ;;
+    v) verbose='true' ;;
+    *) print_usage
+       exit 1 ;;
+  esac
+done
+
+Note: If a character is followed by a colon (e.g. f:), that option is expected to have an argument.
+
+Example usage: ./script -v -a -b -f filename
+
+Using getopts has several advantages over the accepted answer:
+
+  • the while condition is a lot more readable and shows what the accepted options are
+  • cleaner code; no counting the number of parameters and shifting
+  • you can join options (e.g. -a -b -c → -abc)
+
+However, a big disadvantage is that it doesn't support long options, only single-character options.
