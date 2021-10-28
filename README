@@ -39,7 +39,7 @@ Dev notes
 TODO
 ----
 Should be installed to /usr/local/etc/glacier-rootpass (DONE)
-The valid_targets should be a file, and should be put in /usr/local/etc as well.
+The valid_targets should be a file, and should be put in the home directory of the user who installed glacier.
 
 
 sudo apt-get install dnsmasq

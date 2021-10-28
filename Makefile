@@ -6,3 +6,7 @@ default:
 	./settargets.sh
 rootpass:
 	./setpass.sh
+uninstall:
+	sudo rm -rf /usr/local/bin/glacier
+	sudo rm -rf /usr/local/etc/glacier-rootpass
+	rm -rf ~/.glacier-valid-targets

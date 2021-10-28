@@ -67,6 +67,11 @@ export PATH=/usr/local/bin:/bin:/usr/bin
 # Path to valid targets file
 home=$(eval echo ~$SUDO_USER)
 valid_targets_path="$home/.glacier-valid-targets"
+printf "Valid targets path: $valid_targets_path\n"
+if [ ! -f $valid_targets_path ]; then
+    echo "No '~/.glacier-valid-targets' file found."
+    exit 1
+fi
 
 # Read valid targets from file
 IFS=$'\n' read -d '' -r -a valid_targets < $valid_targets_path
@@ -102,6 +107,12 @@ done
 
 # Handle root password query and then exit
 if [[ "$r_flag" == "true" ]] ; then
+    printf "Expected rootpass path: $rootpass_path\n"
+    if [ ! -f $rootpass_path ]; then
+        echo "No '$rootpass_path' file found."
+        echo "Run 'make rootpass' to generate this file."
+        exit 1
+    fi
     time_delay
     printf "ROOT PASSWORD:\n"
     cat $rootpass_path
