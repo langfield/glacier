@@ -25,12 +25,12 @@ delay=5
 
 # Function to check if a variable is contained in an array
 contains() {
-        typeset _x;
-        typeset -n _A="$1"
-        for _x in "${_A[@]}" ; do
-                [ "$_x" = "$2" ] && return 0
-        done
-        return 1
+    typeset _x;
+    typeset -n _A="$1"
+    for _x in "${_A[@]}" ; do
+            [ "$_x" = "$2" ] && return 0
+    done
+    return 1
 }
 
 # Function to print cmdline usage string

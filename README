@@ -26,13 +26,20 @@ Two use cases:
 2. Edit a file frozen with glacier (e.g. /etc/hosts).
 
     glacier -r
-    glacier <filepath> (to edit a frozen file)
+    glacier <filepath> (to display a frozen file)
+    glacier -w <filepath> (to edit a frozen file)
 
 Maybe we can't give it ANY path/file. That seems dangerous. We have a list of "valid targets", which is baked into the ``glacier`` executable. If the user tries to call ``glacier <path>`` and gives a path which is not in ``$VALID_TARGETS``, which will be some kind of bash array of strings, then the script will just do nothing.
 
 
 Dev notes
 =========
+
+TODO
+----
+Should be installed to /usr/local/etc/glacier-rootpass
+The valid_targets should be a file, and should be put in /usr/local/etc as well.
+
 
 sudo apt-get install dnsmasq
 
