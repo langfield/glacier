@@ -20,17 +20,23 @@ Changing or viewing the root psssword will also be locked behind a time-delay, a
 
 Valid targets should always be absolute paths.
 
+Installation
+------------
+1. Edit ``glacier.sh`` to set the delay in seconds. Make this very small to begin with, to avoid danger.
+2. Run ``make`` to install the main executable. This will add a config file ``~/.glacier-valid-targets`` in your home directory.
+3. Add absolute paths of files you wish to freeze to ``~/.glacier-valid-targets``.
+4. Run ``make rootpass`` to generate the frozen root password file. If you want to keep you current root password, just type that in the editor.
+
 Usage
 -----
-Two use cases:
-1. View root password (maybe just cat to shell output).
+Three use cases:
+1. View root password (just cat to shell output).
+2. View a file frozen with glacier.
 2. Edit a file frozen with glacier (e.g. /etc/hosts).
 
     glacier -r
     glacier <filepath> (to display a frozen file)
     glacier -w <filepath> (to edit a frozen file)
-
-Maybe we can't give it ANY path/file. That seems dangerous. We have a list of "valid targets", which is baked into the ``glacier`` executable. If the user tries to call ``glacier <path>`` and gives a path which is not in ``$VALID_TARGETS``, which will be some kind of bash array of strings, then the script will just do nothing.
 
 
 Dev notes
@@ -39,8 +45,9 @@ Dev notes
 TODO
 ----
 Should be installed to /usr/local/etc/glacier-rootpass (DONE)
-The valid_targets should be a file, and should be put in the home directory of the user who installed glacier.
+The valid_targets should be a file, and should be put in the home directory of the user who installed glacier. (DONE)
 
+Maybe we can't give it ANY path/file. That seems dangerous. We have a list of "valid targets", which is baked into the ``glacier`` executable. If the user tries to call ``glacier <path>`` and gives a path which is not in ``$VALID_TARGETS``, which will be some kind of bash array of strings, then the script will just do nothing.
 
 sudo apt-get install dnsmasq
 
