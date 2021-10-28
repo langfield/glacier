@@ -119,7 +119,6 @@
 127.0.0.1	film-news.co.uk
 127.0.0.1	filmibeat.com
 127.0.0.1	firstpost.com
-127.0.0.1	fivethirtyeight.com
 127.0.0.1	forbes.com
 127.0.0.1	forbesindia.com
 127.0.0.1	frontline.in
