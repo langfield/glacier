@@ -10,6 +10,13 @@ export PATH=/usr/local/bin:/bin:/usr/bin
 # Force the script to run with sudo
 [[ $(id -u) != 0 ]] && exec sudo "$0" "$@"
 
+printf "This script is for changing your root password and storing it in a file with 600 octal permissions owned by root.\n"
+printf "In order to view this file, you must be (1) root, or (2) using a successfully-installed glacier executable.\n"
+printf "You will be prompted with an editor in which to enter your new password.\n"
+printf "If a password was previously set with this script, you will be prompted to edit the existing file.\n"
+read -t 60 -p " Continue (y/N)? " YN
+[[ "${YN,,}" =~ ^(y|yes)$ ]] || exit 1
+
 # Create a temporary file which will become ``/usr/local/etc/glacier-rootpass``
 tmpf=$(mktemp "/tmp/${progname}_XXXXXXXXXX")
 if [[ -f "$target" ]] ; then

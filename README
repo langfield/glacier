@@ -18,6 +18,7 @@ It works by:
 
 Changing or viewing the root psssword will also be locked behind a time-delay, and will only be possible via use of the ``glacier`` executable.
 
+Valid targets should always be absolute paths.
 
 Usage
 -----
@@ -37,7 +38,7 @@ Dev notes
 
 TODO
 ----
-Should be installed to /usr/local/etc/glacier-rootpass
+Should be installed to /usr/local/etc/glacier-rootpass (DONE)
 The valid_targets should be a file, and should be put in /usr/local/etc as well.
 
 

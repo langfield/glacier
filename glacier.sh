@@ -8,10 +8,10 @@
 # User configurable values
 
 # Path to root password file
-rootpass_path="/home/mal/pkgs/glacier/rootpass"
+rootpass_path="/usr/local/etc/glacier-rootpass"
 
 # Files we allow to be edited with this script
-valid_targets=("/etc/hosts" "$rootpass_path")
+valid_targets=()
 
 # Delay in seconds
 delay=5
@@ -63,6 +63,15 @@ export PATH=/usr/local/bin:/bin:/usr/bin
 [[ $(id -u) != 0 ]] && exec sudo "$0" "$@"
 
 ########### ALL LOGIC SHOULD BE BELOW THIS POINT ###########
+
+# Path to valid targets file
+home=$(eval echo ~$SUDO_USER)
+valid_targets_path="$home/.glacier-valid-targets"
+
+# Read valid targets from file
+IFS=$'\n' read -d '' -r -a valid_targets < $valid_targets_path
+valid_targets+=("$rootpass_path")
+valid_targets+=("$valid_targets_path")
 
 # Make sure the valid_targets are files that actually exist
 for valid_target in "${valid_targets[@]}"
