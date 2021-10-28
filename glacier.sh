@@ -83,6 +83,7 @@ for valid_target in "${valid_targets[@]}"
 do
     if [ ! -f $valid_target ]; then
         echo "Target not found: $valid_target"
+        echo "You can add this file as a valid target by editing $valid_targets_path"
         exit 1
     fi
 done
@@ -170,7 +171,7 @@ printf "\n############################### --------: '%s' #######################
 time_delay
 
 read -t 60 -p "Are you sure you still want to edit '$target' (y/N)? " YN
-[[ "${YN,,}" =~ ^(y|yes)$ ]] || exit 1
+[[ "${YN,,}" =~ ^(y|yes)$ ]] || printf "Aborting\n" && exit 1
 
 # If the copy of the file we edited ($tmpf) exists and we made nontrivial changes, apply them
 if [[ -f "$tmpf" ]] && ! cmp -s "$target" "$tmpf" ; then
