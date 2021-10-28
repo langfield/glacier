@@ -35,7 +35,7 @@ contains() {
 
 # Function to print cmdline usage string
 print_usage() {
-  printf "Usage: glacier -r (displays rootpass) | glacier <path> (opens frozen file for viewing) | glacier -w <path> (opens frozen file for editing)\n"
+  printf "Usage: glacier -r (displays rootpass) | glacier <path> (opens frozen file for reading) | glacier -w <path> (opens frozen file for writing)\n"
 }
 
 # Function to sleep while printing time remaining
@@ -122,7 +122,7 @@ else
     exit 1
 fi
 
-# Handle viewing query and then exit
+# Handle read query and then exit
 if [[ "$w_flag" == "" ]] ; then
     time_delay
     cat $target
