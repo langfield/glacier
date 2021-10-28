@@ -22,10 +22,22 @@ Valid targets should always be absolute paths.
 
 Installation
 ------------
-1. Edit ``glacier.sh`` to set the delay in seconds. Make this very small to begin with, to avoid danger.
-2. Run ``make`` to install the main executable. This will add a config file ``~/.glacier-valid-targets`` in your home directory.
-3. Add absolute paths of files you wish to freeze to ``~/.glacier-valid-targets``.
-4. Run ``make rootpass`` to generate the frozen root password file. If you want to keep you current root password, just type that in the editor.
+1. Pick files you want to freeze. You can freeze editing or both editing and viewing.
+
+   Freeze editing (non-root users cannot write):
+
+    sudo chown root <file>
+    sudo chmod 755 <file>
+
+   Freeze viewing (non-root users cannot do anything):
+
+    sudo chown root <file>
+    sudo chmod 700 <file>
+
+2. Edit ``glacier.sh`` to set the delay in seconds. Make this very small to begin with, to avoid danger.
+3. Run ``make`` to install the main executable. This will add a config file ``~/.glacier-valid-targets`` in your home directory.
+4. Add absolute paths of files you wish to freeze to ``~/.glacier-valid-targets``.
+5. Run ``make rootpass`` to generate the frozen root password file. If you want to keep you current root password, just type that in the editor.
 
 Usage
 -----
