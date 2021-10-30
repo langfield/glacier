@@ -58,6 +58,10 @@ TODO
 ----
 Should be installed to /usr/local/etc/glacier-rootpass (DONE)
 The valid_targets should be a file, and should be put in the home directory of the user who installed glacier. (DONE)
+Clear the GNU screen copy paste buffer with screen -X -S <session-name> readbuf <file>. Should do this for all existing sessions in a cron job that runs every 5 minutes or so.
+
+Notes
+-----
 
 Maybe we can't give it ANY path/file. That seems dangerous. We have a list of "valid targets", which is baked into the ``glacier`` executable. If the user tries to call ``glacier <path>`` and gives a path which is not in ``$VALID_TARGETS``, which will be some kind of bash array of strings, then the script will just do nothing.
 
