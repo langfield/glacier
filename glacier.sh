@@ -14,7 +14,7 @@ rootpass_path="/usr/local/etc/glacier-rootpass"
 valid_targets=()
 
 # Delay in seconds
-delay=10
+delay=20
 
 ########################################################################
 # Here we go
@@ -171,7 +171,10 @@ printf "\n############################### --------: '%s' #######################
 time_delay
 
 read -t 60 -p "Are you sure you still want to edit '$target' (y/N)? " YN
-[[ "${YN,,}" =~ ^(y|yes)$ ]] || printf "Aborting\n" && exit 1
+if [[ ! "${YN,,}" =~ ^(y|yes)$ ]] ; then
+    printf "Aborting\n"
+    exit 1
+fi
 
 # If the copy of the file we edited ($tmpf) exists and we made nontrivial changes, apply them
 if [[ -f "$tmpf" ]] && ! cmp -s "$target" "$tmpf" ; then

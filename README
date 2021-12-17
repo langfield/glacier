@@ -4,19 +4,34 @@
 
 DANGER
 ------
-Do not run the Makefile or any of these scripts unless you are sure you understand their function, or you are working in a disposable instance (e.g. a container)! This package exists to allow you to change the root password on your system to something you do not have memorized, and which cannot be viewed except through the ``glacier``executable. This is dangerous.
+Do not run the Makefile or any of these scripts unless you are sure you
+understand their function, or you are working in a disposable instance (e.g. a
+container)! This package exists to allow you to change the root password on
+your system to something you do not have memorized, and which cannot be viewed
+except through the ``glacier``executable. This is dangerous.
 
 Intro
 -----
-In pharmacies, certain drugs are put in a time-delay safe, which means there is a fixed lag between the retrieval request and the time the safe is able to open (say maybe 15 minutes). This package is an implementation of this system for file viewing and editing. It allows a user to "freeze" a file such that it cannot be edited until they have waited for some prespecified interval after the initial request is made.
+In pharmacies, certain drugs are put in a time-delay safe, which means there is
+a fixed lag between the retrieval request and the time the safe is able to open
+(say maybe 15 minutes). This package is an implementation of this system for
+file viewing and editing. It allows a user to "freeze" a file such that it
+cannot be edited until they have waited for some prespecified interval after
+the initial request is made.
 
 It works by:
-1. Allowing you to set the root password to e.g. a long alphanumeric string, which is stored in a file only readable by root (600 permissions).
-2. Forcing all users to use the root password in order to run commands as super user.
-3. Adding a user group ``%glacier`` which allows its users to run the ``glacier`` executable as sudo, without prompting for a password.
-4. Implmenting a script which allows a user to edit (or view) files they would ordinarily need sudo access for, and forcing them to wait a configurable amount of time before their edits are applied.
+1.  Allowing you to set the root password to e.g. a long alphanumeric string,
+    which is stored in a file only readable by root (600 permissions).
+2.  Forcing all users to use the root password in order to run commands as super
+    user.
+3.  Implmenting a script (the ``glacier`` executable) which allows a user to
+    edit (or view) files they would ordinarily need sudo access for, and forcing
+    them to wait a configurable amount of time before their edits are applied.
+4.  Adding a user group ``%glacier`` which allows its users to run the
+    ``glacier`` executable as sudo, without prompting for a password.
 
-Changing or viewing the root psssword will also be locked behind a time-delay, and will only be possible via use of the ``glacier`` executable.
+Changing or viewing the root psssword will also be locked behind a time-delay,
+and will only be possible via use of the ``glacier`` executable.
 
 Valid targets should always be absolute paths.
 
