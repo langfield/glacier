@@ -1,10 +1,10 @@
 #!/bin/bash
 
 # Path to valid targets file
-valid_targets_path="$HOME/.glacier-valid-targets"
+valid_targets_path="$HOME/.glacier_targets"
 printf "Valid targets path: $valid_targets_path\n"
 if [ ! -f $valid_targets_path ]; then
-    echo "No '~/.glacier-valid-targets' file found."
+    echo "No targets file found at '$valid_targets_path'"
     echo "Creating new file"
 else
     echo "Found existing valid targets file at '$valid_targets_path'"

@@ -50,8 +50,8 @@ Installation
     sudo chmod 700 <file>
 
 2. Edit ``glacier.sh`` to set the delay in seconds. Make this very small to begin with, to avoid danger.
-3. Run ``make`` to install the main executable. This will add a config file ``~/.glacier-valid-targets`` in your home directory.
-4. Add absolute paths of files you wish to freeze to ``~/.glacier-valid-targets``.
+3. Run ``make`` to install the main executable. This will add a config file ``~/.glacier_targets`` in your home directory.
+4. Add absolute paths of files you wish to freeze to ``~/.glacier_targets``.
 5. Run ``make rootpass`` to generate the frozen root password file. If you want to keep you current root password, just type that in the editor.
 
 Usage

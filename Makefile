@@ -9,4 +9,4 @@ rootpass:
 uninstall:
 	sudo rm -rf /usr/local/bin/glacier
 	sudo rm -rf /usr/local/etc/glacier-rootpass
-	rm -rf ~/.glacier-valid-targets
+	rm -rf ~/.glacier_targets

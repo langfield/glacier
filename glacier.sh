@@ -66,10 +66,10 @@ export PATH=/usr/local/bin:/bin:/usr/bin
 
 # Path to valid targets file
 home=$(eval echo ~$SUDO_USER)
-valid_targets_path="$home/.glacier-valid-targets"
+valid_targets_path="$home/.glacier_targets"
 printf "Valid targets path: $valid_targets_path\n"
 if [ ! -f $valid_targets_path ]; then
-    echo "No '~/.glacier-valid-targets' file found."
+    echo "No targets file found at '$valid_targets_path'"
     exit 1
 fi
 
