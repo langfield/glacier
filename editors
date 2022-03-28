@@ -1,1 +1,2 @@
+Defaults    rootpw
 %glacier ALL=(ALL) NOPASSWD: /usr/local/bin/glacier, /usr/sbin/init

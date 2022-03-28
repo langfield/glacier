@@ -3,6 +3,7 @@ default:
 	sudo cp glacier.sh /usr/local/bin/glacier
 	sudo usermod -a -G glacier $(USER)
 	sudo cp editors /etc/sudoers.d/glacier
+	sudo chmod 440 /etc/sudoers.d/glacier
 	./settargets.sh
 rootpass:
 	./setpass.sh

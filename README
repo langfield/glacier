@@ -53,6 +53,9 @@ Installation
 3. Run ``make`` to install the main executable. This will add a config file ``~/.glacier_targets`` in your home directory.
 4. Add absolute paths of files you wish to freeze to ``~/.glacier_targets``.
 5. Run ``make rootpass`` to generate the frozen root password file. If you want to keep you current root password, just type that in the editor.
+6. In ``/etc/sudoers``, USING ``visudo``, add this line:
+
+    Defaults rootpw
 
 Usage
 -----
