@@ -57,6 +57,8 @@ Installation
 
     Defaults rootpw
 
+7. Reboot machine, and run ``groups`` before testing to make sure current user belongs to ``glacier`` group.
+
 Usage
 -----
 Three use cases:
