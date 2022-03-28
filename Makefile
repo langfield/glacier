@@ -8,5 +8,5 @@ rootpass:
 	./setpass.sh
 uninstall:
 	sudo rm -rf /usr/local/bin/glacier
-	sudo rm -rf /usr/local/etc/glacier-rootpass
+	sudo rm -rf /usr/local/etc/glacier_rootpass
 	rm -rf ~/.glacier_targets

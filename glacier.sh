@@ -8,7 +8,7 @@
 # User configurable values
 
 # Path to root password file
-rootpass_path="/usr/local/etc/glacier-rootpass"
+rootpass_path="/usr/local/etc/glacier_rootpass"
 
 # Files we allow to be edited with this script
 valid_targets=()

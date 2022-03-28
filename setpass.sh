@@ -1,5 +1,5 @@
 #!/bin/bash
-target="/usr/local/etc/glacier-rootpass"
+target="/usr/local/etc/glacier_rootpass"
 
 # This variable expansion gets the basename of the path to this file
 progname="${0##*/}"
@@ -17,7 +17,7 @@ printf "If a password was previously set with this script, you will be prompted 
 read -t 60 -p " Continue (y/N)? " YN
 [[ "${YN,,}" =~ ^(y|yes)$ ]] || exit 1
 
-# Create a temporary file which will become ``/usr/local/etc/glacier-rootpass``
+# Create a temporary file which will become ``/usr/local/etc/glacier_rootpass``
 tmpf=$(mktemp "/tmp/${progname}_XXXXXXXXXX")
 if [[ -f "$target" ]] ; then
     cp -f "$target" "$tmpf"

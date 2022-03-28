@@ -71,7 +71,7 @@ Dev notes
 
 TODO
 ----
-Should be installed to /usr/local/etc/glacier-rootpass (DONE)
+Should be installed to /usr/local/etc/glacier_rootpass (DONE)
 The valid_targets should be a file, and should be put in the home directory of the user who installed glacier. (DONE)
 Clear the GNU screen copy paste buffer with screen -X -S <session-name> readbuf <file>. Should do this for all existing sessions in a cron job that runs every 5 minutes or so.
 
