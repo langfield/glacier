@@ -35,6 +35,7 @@ and will only be possible via use of the ``glacier`` executable.
 
 Valid targets should always be absolute paths.
 
+
 Installation
 ------------
 1. Pick files you want to freeze. You can freeze editing or both editing and viewing.
@@ -76,22 +77,34 @@ Dev notes
 
 TODO
 ----
-Should be installed to /usr/local/etc/glacier_rootpass (DONE)
-The valid_targets should be a file, and should be put in the home directory of the user who installed glacier. (DONE)
-Clear the GNU screen copy paste buffer with screen -X -S <session-name> readbuf <file>. Should do this for all existing sessions in a cron job that runs every 5 minutes or so.
+- Should be installed to /usr/local/etc/glacier_rootpass (DONE)
+- The valid_targets should be a file, and should be put in the home directory
+  of the user who installed glacier. (DONE)
+- Clear the GNU screen copy paste buffer with screen -X -S <session-name>
+  readbuf <file>. This can be done in tmux as well with buffers. We can start a
+  background process that sleeps for one minute, and then clears the buffers,
+  giving the user enough time to get sudo access, until it times out. The
+  process should also probably check that tmux and screen are installed.
 
 Notes
 -----
 
-Maybe we can't give it ANY path/file. That seems dangerous. We have a list of "valid targets", which is baked into the ``glacier`` executable. If the user tries to call ``glacier <path>`` and gives a path which is not in ``$VALID_TARGETS``, which will be some kind of bash array of strings, then the script will just do nothing.
+Maybe we can't give it ANY path/file. That seems dangerous. We have a list of
+"valid targets", which is baked into the ``glacier`` executable. If the user
+tries to call ``glacier <path>`` and gives a path which is not in
+``$VALID_TARGETS``, which will be some kind of bash array of strings, then the
+script will just do nothing.
 
 sudo apt-get install dnsmasq
 
-Consider a script /usr/local/bin/myedit. Add the user into the group myeditors, or if it really will ever only be a single user, change the %myeditors value to the username. Using visudo add this line to the sudoers file
+Consider a script /usr/local/bin/myedit. Add the user into the group myeditors,
+or if it really will ever only be a single user, change the %myeditors value to
+the username. Using visudo add this line to the sudoers file
 
 %myeditors ALL=(ALL) NOPASSWD: /usr/local/bin/myedit
 
-Now create the script /usr/local/bin/myedit, remembering to make it executable (chmod a+x /usr/local/bin/myedit).
+Now create the script /usr/local/bin/myedit, remembering to make it executable
+(chmod a+x /usr/local/bin/myedit).
 
 sudo systemctl restart NetworkManager
 
@@ -109,11 +122,10 @@ Setting root password
 ---------------------
 1. Login as root.
 2. Create a file called ``rootpass``.
-3. Change permissions of the file so the owner (root) has read/write permissions and the group/others have nothing.
+3. Change permissions of the file so the owner (root) has read/write
+   permissions and the group/others have nothing.
 
 	chmod 600 rootpass
-
-4.
 
 
 Argument parsing
@@ -138,7 +150,8 @@ while getopts 'abf:v' flag; do
   esac
 done
 
-Note: If a character is followed by a colon (e.g. f:), that option is expected to have an argument.
+Note: If a character is followed by a colon (e.g. f:), that option is expected
+      to have an argument.
 
 Example usage: ./script -v -a -b -f filename
 
@@ -148,4 +161,5 @@ Using getopts has several advantages over the accepted answer:
   • cleaner code; no counting the number of parameters and shifting
   • you can join options (e.g. -a -b -c → -abc)
 
-However, a big disadvantage is that it doesn't support long options, only single-character options.
+However, a big disadvantage is that it doesn't support long options, only
+single-character options.
