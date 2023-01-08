@@ -14,7 +14,7 @@ rootpass_path="/usr/local/etc/glacier_rootpass"
 valid_targets=()
 
 # Delay in seconds
-delay=20
+delay=120
 
 ########################################################################
 # Here we go
