@@ -3,9 +3,10 @@
 # THIS SCRIPT RUNS AS ROOT
 #
 # %glacier ALL=(ALL) NOPASSWD: /usr/local/bin/glacier
-########################################################################
 
-# User configurable values
+# ------------------------------------------------------------------------------
+#  User configurable values
+# ------------------------------------------------------------------------------
 
 # Path to root password file
 rootpass_path="/usr/local/etc/glacier_rootpass"
@@ -13,12 +14,7 @@ rootpass_path="/usr/local/etc/glacier_rootpass"
 # Delay in seconds
 delay=7200
 
-########################################################################
-# Here we go
-
-#####################
-# vvv FUNCTIONS vvv #
-#####################
+# ------------------------------------------------------------------------------
 
 # Function to print cmdline usage string
 print_usage() {
@@ -36,17 +32,11 @@ time_delay() {
     printf '\n'
 }
 
-#####################
-# ^^^ FUNCTIONS ^^^ #
-#####################
-
 # Reset PATH to known quantity
 export PATH=/usr/local/bin:/bin:/usr/bin
 
 # Force the script to run with sudo
 [[ $(id -u) != 0 ]] && exec sudo "$0" "$@"
-
-########### ALL LOGIC SHOULD BE BELOW THIS POINT ###########
 
 # Handle root password query and then exit
 if [[ "$r_flag" == "true" ]] ; then
