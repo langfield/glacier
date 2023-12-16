@@ -24,53 +24,30 @@ It works by:
     which is stored in a file only readable by root (600 permissions).
 2.  Forcing all users to use the root password in order to run commands as super
     user.
-3.  Implmenting a script (the ``glacier`` executable) which allows a user to
-    edit (or view) files they would ordinarily need sudo access for, and forcing
-    them to wait a configurable amount of time before their edits are applied.
+3.  Only allowing reads of the root password file via the ``glacier``
+    executable, and forcing the user to wait a configurable amount of time before
+    the contents are readable.
 4.  Adding a user group ``%glacier`` which allows its users to run the
     ``glacier`` executable as sudo, without prompting for a password.
 
 Changing or viewing the root psssword will also be locked behind a time-delay,
 and will only be possible via use of the ``glacier`` executable.
 
-Valid targets should always be absolute paths.
-
 
 Installation
 ------------
-1. Pick files you want to freeze. You can freeze editing or both editing and viewing.
-
-   Freeze editing (non-root users cannot write):
-
-    sudo chown root <file>
-    sudo chmod 755 <file>
-
-   Freeze viewing (non-root users cannot do anything):
-
-    sudo chown root <file>
-    sudo chmod 700 <file>
-
-2. Edit ``glacier.sh`` to set the delay in seconds. Make this very small to begin with, to avoid danger.
-3. Run ``make`` to install the main executable. This will add a config file ``~/.glacier_targets`` in your home directory.
-4. Add absolute paths of files you wish to freeze to ``~/.glacier_targets``.
-5. Run ``make rootpass`` to generate the frozen root password file. If you want to keep you current root password, just type that in the editor.
-6. In ``/etc/sudoers``, USING ``visudo``, add this line:
+1. Edit ``glacier.sh`` to set the delay in seconds. Make this very small to begin with, to avoid danger.
+2. Run ``make`` to install the main executable.
+3. Run ``make rootpass`` to generate the frozen root password file. If you want to keep you current root password, just type that in the editor.
+4. In ``/etc/sudoers``, USING ``visudo``, add this line:
 
     Defaults rootpw
 
-7. Reboot machine, and run ``groups`` before testing to make sure current user belongs to ``glacier`` group.
+5. Reboot machine, and run ``groups`` before testing to make sure current user belongs to ``glacier`` group.
 
 Usage
 -----
-Three use cases:
-1. View root password (just cat to shell output).
-2. View a file frozen with glacier.
-2. Edit a file frozen with glacier (e.g. /etc/hosts).
-
-    glacier -r
-    glacier <filepath> (to display a frozen file)
-    glacier -w <filepath> (to edit a frozen file)
-
+glacier
 
 Dev notes
 =========
@@ -78,8 +55,6 @@ Dev notes
 TODO
 ----
 - Should be installed to /usr/local/etc/glacier_rootpass (DONE)
-- The valid_targets should be a file, and should be put in the home directory
-  of the user who installed glacier. (DONE)
 - Clear the GNU screen copy paste buffer with screen -X -S <session-name>
   readbuf <file>. This can be done in tmux as well with buffers. We can start a
   background process that sleeps for one minute, and then clears the buffers,
@@ -88,14 +63,6 @@ TODO
 
 Notes
 -----
-
-Maybe we can't give it ANY path/file. That seems dangerous. We have a list of
-"valid targets", which is baked into the ``glacier`` executable. If the user
-tries to call ``glacier <path>`` and gives a path which is not in
-``$VALID_TARGETS``, which will be some kind of bash array of strings, then the
-script will just do nothing.
-
-sudo apt-get install dnsmasq
 
 Consider a script /usr/local/bin/myedit. Add the user into the group myeditors,
 or if it really will ever only be a single user, change the %myeditors value to
@@ -126,40 +93,3 @@ Setting root password
    permissions and the group/others have nothing.
 
 	chmod 600 rootpass
-
-
-Argument parsing
-----------------
-a_flag=''
-b_flag=''
-files=''
-verbose='false'
-
-print_usage() {
-  printf "Usage: ..."
-}
-
-while getopts 'abf:v' flag; do
-  case "${flag}" in
-    a) a_flag='true' ;;
-    b) b_flag='true' ;;
-    f) files="${OPTARG}" ;;
-    v) verbose='true' ;;
-    *) print_usage
-       exit 1 ;;
-  esac
-done
-
-Note: If a character is followed by a colon (e.g. f:), that option is expected
-      to have an argument.
-
-Example usage: ./script -v -a -b -f filename
-
-Using getopts has several advantages over the accepted answer:
-
-  • the while condition is a lot more readable and shows what the accepted options are
-  • cleaner code; no counting the number of parameters and shifting
-  • you can join options (e.g. -a -b -c → -abc)
-
-However, a big disadvantage is that it doesn't support long options, only
-single-character options.
