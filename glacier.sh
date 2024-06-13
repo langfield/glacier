@@ -12,7 +12,7 @@
 rootpass_path="/usr/local/etc/glacier_rootpass"
 
 # Delay in seconds
-delay=5
+delay=3600
 
 ########################################################################
 # Here we go
