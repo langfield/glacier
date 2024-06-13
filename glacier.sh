@@ -4,49 +4,14 @@
 #
 # %glacier ALL=(ALL) NOPASSWD: /usr/local/bin/glacier
 
-# ------------------------------------------------------------------------------
-#  User configurable values
-# ------------------------------------------------------------------------------
-
-# Path to root password file
 rootpass_path="/usr/local/etc/glacier_rootpass"
-
-# Delay in seconds
 delay=3600
-
-########################################################################
-# Here we go
-
-#####################
-# vvv FUNCTIONS vvv #
-#####################
-
-# Function to sleep while printing time remaining
-time_delay() {
-    echo "Delay: $delay"
-    for i in $(seq 1 $delay);
-    do
-        printf 'Waiting %d seconds...\r' $(($delay - $i))
-        sleep 1
-    done
-    printf '\n'
-}
-# Function to print cmdline usage string
-print_usage() {
-  printf "Usage: glacier (displays rootpass) | glacier -a <URL> (append URL to /etc/hosts)\n"
-}
-
-#####################
-# ^^^ FUNCTIONS ^^^ #
-#####################
 
 # Reset PATH to known quantity
 export PATH=/usr/local/bin:/bin:/usr/bin
 
 # Force the script to run with sudo
 [[ $(id -u) != 0 ]] && exec sudo "$0" "$@"
-
-########### ALL LOGIC SHOULD BE BELOW THIS POINT ###########
 
 home=$(eval echo ~$SUDO_USER)
 
@@ -56,7 +21,7 @@ a_flag=''
 while getopts 'a:' flag; do
   case "${flag}" in
     a) a_flag='true' ;;
-    *) print_usage
+    *) printf "Usage: glacier (displays rootpass) | glacier -a <URL> (append URL to /etc/hosts)\n"
        printf "bad cmdline flag\n"
        exit 1 ;;
   esac
@@ -77,7 +42,13 @@ if [ ! -f $rootpass_path ]; then
     echo "Run 'make rootpass' to generate this file."
     exit 1
 fi
-time_delay
+echo "Delay: $delay"
+for i in $(seq 1 $delay);
+do
+    printf 'Waiting %d seconds...\r' $(($delay - $i))
+    sleep 1
+done
+printf '\n'
 printf "ROOT PASSWORD:\n"
 cat $rootpass_path
 exit 0
